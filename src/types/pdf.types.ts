@@ -46,6 +46,15 @@ export interface ClauseAnalysis {
     created_at: string;
     updated_at: string;
     subclauses?: string[];
+
+    // Detailed analysis
+    violations?: (string | { type: string; source_layer?: string })[];
+    conflicts?: { conflict: string; resolution: string }[];
+    required_actions?: { action: string; priority?: string }[];
+    layer_summary?: {
+        aaoifi?: { verdict: string; findings: string };
+        sama?: { verdict: string; findings: string }; // Fixed typo 'sama'
+    };
 }
 
 /** Computed summary — derived before passing to PDF */

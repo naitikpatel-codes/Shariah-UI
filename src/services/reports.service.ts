@@ -7,7 +7,7 @@ export const reportsService = {
             .from('input_documents')
             .select('*')
             .eq('id', documentId)
-            .single();
+            .maybeSingle();
 
         if (error) throw new Error(error.message);
         return data;
@@ -46,10 +46,10 @@ export const reportsService = {
             .from('final_decisions')
             .select('*')
             .eq('clause_id', clauseId)
-            .single();
+            .maybeSingle();
 
-        if (error && error.code !== 'PGRST116') throw new Error(error.message);
-        return data ?? null;
+        if (error) throw new Error(error.message);
+        return data;
     },
 
     // ── Get SAMA Results for a Clause ───────────────────────
@@ -58,10 +58,10 @@ export const reportsService = {
             .from('sama_regulation_results')
             .select('*')
             .eq('clause_id', clauseId)
-            .single();
+            .maybeSingle();
 
-        if (error && error.code !== 'PGRST116') throw new Error(error.message);
-        return data ?? null;
+        if (error) throw new Error(error.message);
+        return data;
     },
 
     // ── Get AAOIFI Results for a Clause ─────────────────────
@@ -70,10 +70,10 @@ export const reportsService = {
             .from('aaoifistandards_analysis_results')
             .select('*')
             .eq('clause_id', clauseId)
-            .single();
+            .maybeSingle();
 
-        if (error && error.code !== 'PGRST116') throw new Error(error.message);
-        return data ?? null;
+        if (error) throw new Error(error.message);
+        return data;
     },
 
     // ── Get All Clauses with Final Decisions (for Export) ───
@@ -82,7 +82,19 @@ export const reportsService = {
             .from('clause_analyses')
             .select(`
         *,
-        final_decisions (*),
+        final_decisions (
+            final_classification,
+            final_severity,
+            final_confidence,
+            decision_rationale,
+            conflicts_identified,
+            consolidated_violations,
+            consolidated_remediation,
+            required_actions,
+            layer_summary,
+            created_at,
+            id
+        ),
         sama_regulation_results (*),
         aaoifistandards_analysis_results (*)
       `)

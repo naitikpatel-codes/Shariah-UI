@@ -1,45 +1,64 @@
-// Design System Tokens for PDF Export — REDESIGNED
-// Blue/Navy Theme — Fortiv Solutions
+// ─────────────────────────────────────────────────────────────
+// PDF Design Tokens — matched to shariah_compliance_report_template.html
+// ─────────────────────────────────────────────────────────────
 
 export const C = {
-    // ── Brand ──────────────────────────────────────
-    primary: '#1783DF',   // blue — headers, badges, links
-    navy: '#1783DF',   // dark navy — header bg, accent bars
-    white: '#FFFFFF',
+    // ── Brand (from --brand, --brand-dark, --brand-mid, --brand-light, --brand-xlight) ──
+    brand: '#1783DF',
+    brandDark: '#1068B8',
+    brandMid: '#2393EF',
+    brandLight: '#DCF0FF',
+    brandXLight: '#F0F8FF',
 
-    // ── Table Structure ────────────────────────────
-    tableHead: '#1783DF',   // table header row background
-    tableHeadTxt: '#FFFFFF',   // table header text
-    tableRow: '#FFFFFF',   // data row background
-    tableAlt: '#F4F8FD',   // alternating row (light blue tint)
-    tableBorder: '#DAEAF8',   // cell border colour
+    // ── Header gradient approximation (PDF can't do CSS gradients, use solid brandDark) ──
+    headerBg: '#1068B8',
 
-    // ── Status Colours ─────────────────────────────
+    // ── Status colours (from template vars) ──
     compliant: '#16A34A',
     compliantBg: '#F0FDF4',
+    compliantBorder: '#86EFAC',
+
     review: '#D97706',
     reviewBg: '#FFFBEB',
-    nonCompliant: '#DC2626',
-    nonCompliantBg: '#FEF2F2',
+    reviewBorder: '#FCD34D',
 
-    // ── Severity ───────────────────────────────────
-    sevLow: '#6B7280', sevLowBg: '#F3F4F6',
-    sevMed: '#D97706', sevMedBg: '#FFFBEB',
-    sevHigh: '#EA580C', sevHighBg: '#FFF7ED',
-    sevCrit: '#DC2626', sevCritBg: '#FEF2F2',
+    critical: '#DC2626',
+    criticalBg: '#FEF2F2',
+    criticalBorder: '#FCA5A5',
 
-    // ── Neutral ────────────────────────────────────
-    gray50: '#F8FAFC',
-    gray100: '#F1F5F9',
-    gray200: '#E2E8F0',
-    gray400: '#94A3B8',
-    gray500: '#64748B',
-    gray700: '#334155',
-    gray900: '#0F172A',
+    // ── Ink scale (from --ink-XXX) ──
+    ink900: '#0A1929',
+    ink700: '#1E3A5F',
+    ink500: '#4A6580',
+    ink300: '#A8BECE',
+    ink100: '#EDF2F7',
+    ink50: '#F7FAFC',
 
-    // ── Reference tag colours ──────────────────────
-    aaoifiBorder: '#1783DF', aaoifiBg: '#EFF6FF', aaaoifiText: '#1D4ED8',
-    samaBorder: '#1783DF', samaBg: '#F0F7FF', samaText: '#1783DF',
+    white: '#FFFFFF',
+
+    // ── Layer box tints (from .flag-box colours in template) ──
+    conflictBg: '#FFF8F0',
+    conflictBorder: '#FDE8C8',
+    conflictText: '#92400E',
+    conflictLabel: '#B45309',
+
+    actionsBg: '#F0F9FF',
+    actionsBorder: '#BAE6FD',
+    actionsText: '#075985',
+    actionsLabel: '#0369A1',
+
+    // ── Severity tag BGs (from template .severity-tag) ──
+    severityCriticalBg: '#FEF2F2',
+    severityMediumBg: '#FFFBEB',
+    severityLowBg: '#F7FAFC',
+
+    // ── Decision block (from .decision-block, .decision-header) ──
+    decisionBorder: '#DCF0FF',
+    decisionHeaderBg: '#F0F8FF',
+    decisionBorderRed: '#FCA5A5',
+    decisionRedBg: '#FEF2F2',
+    decisionGreenBg: '#F0FDF4',
+    decisionGreenBord: '#86EFAC',
 };
 
 export const F = {
@@ -49,10 +68,10 @@ export const F = {
 };
 
 export const SIZE = {
-    pageMargin: 36,       // pt — uniform page margin
-    headerH: 64,       // pt — top header band height
-    rowH: 22,       // pt — standard table row height
-    cellPad: 6,        // pt — table cell padding
-    radius: 4,        // pt — border radius
-    logoW: 90,       // pt — logo image width
+    pageMargin: 36,   // page horizontal padding
+    headerH: 62,   // fixed header band height
+    cellPad: 8,    // general cell padding
+    radius: 4,    // border radius (PDF limited)
+    logoW: 80,   // logo width
+    clauseGap: 14,   // gap between clause cards
 };

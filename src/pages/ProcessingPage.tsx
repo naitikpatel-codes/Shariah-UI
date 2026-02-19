@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FileText, Check, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -12,6 +12,7 @@ const steps = [
 ];
 
 export default function ProcessingPage() {
+  const { id } = useParams();
   const [currentStep, setCurrentStep] = useState(0);
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function ProcessingPage() {
       setCurrentStep((prev) => {
         if (prev >= steps.length - 1) {
           clearInterval(stepInterval);
-          setTimeout(() => navigate('/report/1'), 1500);
+          setTimeout(() => navigate(`/report/${id}`), 1500);
           return prev;
         }
         return prev + 1;
@@ -37,7 +38,7 @@ export default function ProcessingPage() {
       clearInterval(stepInterval);
       clearInterval(progressInterval);
     };
-  }, [navigate]);
+  }, [navigate, id]);
 
   return (
     <div className="max-w-xl mx-auto text-center pt-16">

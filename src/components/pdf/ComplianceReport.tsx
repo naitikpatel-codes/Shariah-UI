@@ -4,9 +4,9 @@ import { CoverPage } from './sections/CoverPage';
 import { ClauseTable } from './sections/ClauseTable';
 import { FooterDisclaimer } from './sections/FooterDisclaimer';
 import { C, F, SIZE } from './tokens';
-// Use logo from public folder (accessible at runtime)
-const fortivLogoWhite = '/fortiv-logo.jpg';
 import type { InputDocument, ClauseAnalysis, ReportSummary } from '@/types/pdf.types';
+
+const fortivLogoWhite = '/fortiv-logo.jpg';
 
 interface Props {
     document: InputDocument;
@@ -14,27 +14,50 @@ interface Props {
     summary: ReportSummary;
 }
 
-const clausePageStyles = StyleSheet.create({
-    page: {
-        backgroundColor: C.white,
-        fontFamily: F.normal,
-    },
-    // ── Navy header (fixed on every page) ──
+const cs = StyleSheet.create({
+    page: { backgroundColor: '#ECF1F8', fontFamily: F.normal },
+
+    // ── Fixed header band on every clause page ───────────────
     header: {
-        backgroundColor: C.navy,
+        backgroundColor: C.brandDark,
         height: SIZE.headerH,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: SIZE.pageMargin,
     },
-    logo: { width: SIZE.logoW },
-    headerRight: { alignItems: 'flex-end' },
-    headerTitle: { color: C.white, fontSize: 11, fontFamily: F.bold },
-    headerSub: { color: C.white, fontSize: 8, opacity: 0.7, marginTop: 2 },
-    // ── Body ──
-    body: { paddingHorizontal: SIZE.pageMargin, paddingTop: 16, paddingBottom: 60 },
-    // ── Footer ──
+    logoImg: { width: SIZE.logoW },
+    headerRight: { alignItems: 'flex-end', gap: 2 },
+    headerTitle: { color: C.white, fontSize: 10.5, fontFamily: F.bold, letterSpacing: 0.3 },
+    headerSub: { color: C.white, fontSize: 8, opacity: 0.65 },
+
+    // ── Body ──────────────────────────────────────────────────
+    body: {
+        paddingHorizontal: SIZE.pageMargin,
+        paddingTop: 18,
+        paddingBottom: 64,
+    },
+
+    // ── Section heading (dot + title + line) ─────────────────
+    sectionHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 14,
+    },
+    sectionDot: {
+        width: 7, height: 7, borderRadius: 4,
+        backgroundColor: C.brand, flexShrink: 0,
+    },
+    sectionTitle: {
+        fontSize: 16,
+        fontFamily: F.bold,
+        color: C.ink900,
+        letterSpacing: -0.2,
+    },
+    sectionLine: { flex: 1, height: 1, backgroundColor: C.ink100 },
+
+    // ── Footer ────────────────────────────────────────────────
     footer: {
         position: 'absolute',
         bottom: 18,
@@ -42,12 +65,24 @@ const clausePageStyles = StyleSheet.create({
         right: SIZE.pageMargin,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'flex-end',
         borderTopWidth: 1,
-        borderTopColor: C.gray200,
-        paddingTop: 5,
+        borderTopColor: C.ink100,
+        paddingTop: 6,
     },
-    footerText: { fontSize: 8, color: C.gray400 },
-    disclaimerLine: { fontSize: 6.5, color: C.gray400, marginTop: 3, fontStyle: 'italic' },
+    footerLeft: { gap: 2 },
+    footerBrand: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+    footerDot: { width: 5, height: 5, borderRadius: 3, backgroundColor: C.brand, opacity: 0.5 },
+    footerBrandText: { fontSize: 9.5, color: C.ink300 },
+    footerBrandBold: { fontSize: 9.5, fontFamily: F.bold, color: C.brand },
+    footerLegal: {
+        fontSize: 8,
+        color: C.ink300,
+        lineHeight: 1.5,
+        textAlign: 'right',
+        maxWidth: 250,
+    },
+    footerPageNum: { fontSize: 9.5, color: C.ink300 },
 });
 
 export function ComplianceReportDocument({ document, clauses, summary }: Props) {
@@ -59,45 +94,54 @@ export function ComplianceReportDocument({ document, clauses, summary }: Props) 
             creator="Fortiv AI Screener v1.0"
             producer="@react-pdf/renderer"
         >
-            {/* Page 1: Cover */}
+            {/* ── Page 1: Cover + Document Info ── */}
             <CoverPage document={document} summary={summary} />
 
-            {/* Pages 2+: Clause Detail Tables */}
-            <Page size="A4" style={clausePageStyles.page}>
-                {/* ── Repeating page header — logo top-left on every page ── */}
-                <View fixed style={clausePageStyles.header}>
-                    <Image src={fortivLogoWhite} style={clausePageStyles.logo} />
-                    <View style={clausePageStyles.headerRight}>
-                        <Text style={clausePageStyles.headerTitle}>Shariah Compliance Report</Text>
-                        <Text style={clausePageStyles.headerSub}>{document.document_name}</Text>
+            {/* ── Pages 2+: Clause-by-Clause Analysis ── */}
+            <Page size="A4" style={cs.page}>
+
+                {/* Fixed header on every page */}
+                <View fixed style={cs.header}>
+                    <Image src={fortivLogoWhite} style={cs.logoImg} />
+                    <View style={cs.headerRight}>
+                        <Text style={cs.headerTitle}>Shariah Compliance Report</Text>
+                        <Text style={cs.headerSub}>{document.document_name}</Text>
                     </View>
                 </View>
 
-                {/* ── Clause detail table blocks ── */}
-                <View style={clausePageStyles.body}>
+                {/* Clause cards */}
+                <View style={cs.body}>
+                    <View style={cs.sectionHeader}>
+                        <View style={cs.sectionDot} />
+                        <Text style={cs.sectionTitle}>Clause-by-Clause Analysis</Text>
+                        <View style={cs.sectionLine} />
+                    </View>
+
                     {clauses.map((clause) => (
                         <ClauseTable key={clause.id} clause={clause} />
                     ))}
                 </View>
 
-                {/* ── Footer on every page ── */}
-                <View fixed style={clausePageStyles.footer}>
-                    <View>
-                        <Text style={clausePageStyles.footerText}>
-                            Fortiv Solutions  ·  AI Shariah Compliance Screener  ·  Confidential
-                        </Text>
-                        <Text style={clausePageStyles.disclaimerLine}>
-                            AI-generated analysis — must be reviewed by a qualified Shariah scholar before execution.
+                {/* Fixed footer on every page */}
+                <View fixed style={cs.footer}>
+                    <View style={cs.footerLeft}>
+                        <View style={cs.footerBrand}>
+                            <View style={cs.footerDot} />
+                            <Text style={cs.footerBrandText}>Generated by </Text>
+                            <Text style={cs.footerBrandBold}>Fortiv Solutions</Text>
+                        </View>
+                        <Text style={cs.footerLegal}>
+                            AI-generated · must be reviewed by a qualified Shariah scholar
                         </Text>
                     </View>
                     <Text
-                        style={clausePageStyles.footerText}
+                        style={cs.footerPageNum}
                         render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`}
                     />
                 </View>
             </Page>
 
-            {/* Last Page: Footer Disclaimer */}
+            {/* ── Last page: Disclaimer & Signatures ── */}
             <FooterDisclaimer summary={summary} />
         </Document>
     );

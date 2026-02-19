@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { ContractType } from '@/types';
 import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/stores/authStore';
+import { supabase } from '@/lib/supabase';
 
 const contractTypes: ContractType[] = [
   'Murabaha', 'Ijarah', 'Musharakah', 'Mudarabah',
@@ -20,6 +22,7 @@ export default function NewAnalysisPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const userId = useAuthStore((state) => state.user?.id);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -49,6 +52,13 @@ export default function NewAnalysisPage() {
       formData.append('contractType', selectedType);
       formData.append('fileName', file.name);
       formData.append('file', file);
+      if (userId) {
+        formData.append('userId', userId);
+      }
+
+      // Extract file extension (e.g., pdf, docx)
+      const fileExtension = file.name.split('.').pop()?.toLowerCase() || '';
+      formData.append('fileType', fileExtension);
 
       const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
@@ -63,6 +73,12 @@ export default function NewAnalysisPage() {
 
       // Navigate to the report or processing page with the response
       if (result?.id) {
+        // Explicitly update the timestamp to now to ensure it counts for "This Month"
+        await supabase
+          .from('input_documents')
+          .update({ timestamp: new Date().toISOString() })
+          .eq('id', result.id);
+
         navigate(`/report/${result.id}`);
       } else {
         // If no document ID in response, navigate to dashboard

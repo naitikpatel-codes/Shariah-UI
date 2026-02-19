@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shariah Compliance Report — Fortiv Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand:        #1783DF;
+    --brand-dark:   #1068B8;
+    --brand-mid:    #2393EF;
+    --brand-light:  #DCF0FF;
+    --brand-xlight: #F0F8FF;
+
+    --compliant:        #16A34A;
+    --compliant-bg:     #F0FDF4;
+    --compliant-border: #86EFAC;
+
+    --review:        #D97706;
+    --review-bg:     #FFFBEB;
+    --review-border: #FCD34D;
+
+    --critical:        #DC2626;
+    --critical-bg:     #FEF2F2;
+    --critical-border: #FCA5A5;
+
+    --ink-900:   #0A1929;
+    --ink-700:   #1E3A5F;
+    --ink-500:   #4A6580;
+    --ink-300:   #A8BECE;
+    --ink-100:   #EDF2F7;
+    --ink-50:    #F7FAFC;
+
+    --white: #FFFFFF;
+    --radius:    10px;
+    --radius-sm: 6px;
+    --radius-lg: 16px;
+    --shadow-sm:  0 1px 3px rgba(23,131,223,.06), 0 1px 2px rgba(23,131,223,.04);
+    --shadow-md:  0 4px 16px rgba(23,131,223,.08), 0 2px 6px rgba(23,131,223,.05);
+    --shadow-lg:  0 12px 40px rgba(23,131,223,.12), 0 4px 12px rgba(23,131,223,.07);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Geist', 'DM Sans', system-ui, sans-serif;
+    background: #ECF1F8;
+    color: var(--ink-900);
+    font-size: 13.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── COVER HEADER ── */
+  .cover {
+    background: linear-gradient(140deg, var(--brand-dark) 0%, var(--brand) 50%, var(--brand-mid) 100%);
+    border-radius: var(--radius-lg);
+    padding: 46px 52px 42px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-lg);
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.055);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: 160px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cover-accent {
+    position: absolute;
+    top: 0; left: 52px; right: 52px;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.1));
+    border-radius: 0 0 3px 3px;
+  }
+  .cover-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    position: relative; z-index: 1;
+  }
+  .cover-logo { display: flex; align-items: center; gap: 10px; }
+  .logo-mark {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-mark svg { width: 22px; height: 22px; }
+  .logo-text { line-height: 1.2; }
+  .logo-name  { font-size: 15px; font-weight: 600; letter-spacing: -.01em; }
+  .logo-sub   { font-size: 10.5px; opacity: .55; font-weight: 400; margin-top: 1px; }
+  .cover-pill {
+    background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    opacity: .88;
+  }
+  .cover-body { position: relative; z-index: 1; }
+  .cover-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: -.025em;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .cover-doc-name {
+    font-size: 13px;
+    opacity: .65;
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+  .cover-doc-name span {
+    opacity: 1;
+    font-weight: 500;
+    background: rgba(255,255,255,0.12);
+    border-radius: 4px;
+    padding: 1px 8px;
+    margin-right: 4px;
+  }
+  .cover-meta-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .cover-meta-item {
+    background: rgba(255,255,255,0.06);
+    padding: 14px 18px;
+  }
+  .cover-meta-item:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+  .cover-meta-item:last-child  { border-radius: 0 var(--radius) var(--radius) 0; }
+  .meta-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    opacity: .5;
+    margin-bottom: 5px;
+  }
+  .meta-value {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1;
+  }
+  .meta-sub { font-size: 10.5px; opacity: .55; margin-top: 3px; }
+  .meta-value.compliant { color: #6EE7A0; }
+  .meta-value.review    { color: #FCD34D; }
+  .meta-value.critical  { color: #FCA5A5; }
+
+  /* ── SUMMARY CARDS ── */
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .summary-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(23,131,223,.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .summary-card.card-blue::before  { background: var(--brand); }
+  .summary-card.card-amber::before { background: var(--review); }
+  .summary-card.card-red::before   { background: var(--critical); }
+  .sc-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+    margin-bottom: 10px;
+  }
+  .sc-value {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .sc-value.blue  { color: var(--brand); }
+  .sc-value.amber { color: var(--review); }
+  .sc-value.red   { color: var(--critical); }
+  .sc-sub { font-size: 11.5px; color: var(--ink-500); }
+  .sc-bar-track {
+    height: 4px;
+    background: var(--ink-100);
+    border-radius: 4px;
+    margin-top: 14px;
+    overflow: hidden;
+  }
+  .sc-bar-fill { height: 100%; border-radius: 4px; }
+  .sc-bar-fill.blue  { background: var(--brand); }
+  .sc-bar-fill.amber { background: var(--review); }
+  .sc-bar-fill.red   { background: var(--critical); }
+
+  /* ── SECTION TITLES ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-header h2 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: -.015em;
+    color: var(--ink-900);
+  }
+  .section-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--brand);
+    flex-shrink: 0;
+  }
+  .section-line { flex: 1; height: 1px; background: var(--ink-100); }
+
+  /* ── INFO BLOCK ── */
+  .info-block {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid rgba(23,131,223,.07);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .info-block-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .info-cell {
+    padding: 18px 24px;
+    border-right: 1px solid var(--ink-100);
+    border-bottom: 1px solid var(--ink-100);
+  }
+  .info-cell:nth-child(3n)      { border-right: none; }
+  .info-cell:nth-last-child(-n+3) { border-bottom: none; }
+  .info-cell-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-300);
+    margin-bottom: 5px;
+  }
+  .info-cell-value { font-size: 13.5px; font-weight: 500; color: var(--ink-900); }
+
+  /* ── CLAUSE TABS ── */
+  .clause-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .clause-tab {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+  }
+  .clause-tab.active  { background: var(--brand); color: #fff; }
+  .clause-tab.inactive { background: var(--white); color: var(--ink-500); border: 1px solid var(--ink-100); }
+  .tab-count { font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 10px; }
+  .clause-tab.active .tab-count  { background: rgba(255,255,255,0.22); color: #fff; }
+  .clause-tab.inactive .tab-count { background: var(--ink-100); color: var(--ink-500); }
+
+  /* ── CLAUSE CARDS ── */
+  .clause-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+  .clause-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid rgba(23,131,223,.07);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .clause-card.status-compliant { border-left: 3.5px solid var(--compliant); }
+  .clause-card.status-review    { border-left: 3.5px solid var(--review); }
+  .clause-card.status-critical  { border-left: 3.5px solid var(--critical); }
+
+  .clause-top {
+    padding: 16px 20px 14px;
+    border-bottom: 1px solid var(--ink-100);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .clause-top-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  .clause-id {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-500);
+    background: var(--ink-50);
+    border: 1px solid var(--ink-100);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .status-badge {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: .02em;
+    white-space: nowrap;
+  }
+  .badge-compliant { background: var(--compliant-bg);  color: var(--compliant);  border: 1px solid var(--compliant-border); }
+  .badge-review    { background: var(--review-bg);     color: var(--review);     border: 1px solid var(--review-border); }
+  .badge-critical  { background: var(--critical-bg);   color: var(--critical);   border: 1px solid var(--critical-border); }
+
+  .severity-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 2px 9px;
+    border-radius: 4px;
+  }
+  .severity-tag.critical { background: var(--critical-bg); color: var(--critical); }
+  .severity-tag.medium   { background: var(--review-bg);   color: var(--review); }
+  .severity-tag.low      { background: var(--ink-50);      color: var(--ink-500); border: 1px solid var(--ink-100); }
+
+  .clause-top-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .conf-pill {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--ink-500);
+    background: var(--ink-50);
+    border: 1px solid var(--ink-100);
+    border-radius: 20px;
+    padding: 2px 10px;
+  }
+
+  .clause-body { padding: 16px 20px; }
+  .clause-text-label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-300);
+    margin-bottom: 7px;
+  }
+  .clause-text {
+    font-size: 12.5px;
+    color: var(--ink-700);
+    line-height: 1.7;
+    background: var(--ink-50);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-style: italic;
+  }
+
+  /* Decision block */
+  .decision-block {
+    margin-top: 16px;
+    border: 1px solid var(--brand-light);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .decision-header {
+    background: var(--brand-xlight);
+    padding: 9px 16px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-bottom: 1px solid var(--brand-light);
+  }
+  .decision-header-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); flex-shrink: 0; }
+  .decision-header-label { font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--brand); }
+  .decision-body { padding: 14px 16px; }
+  .decision-row { margin-bottom: 10px; }
+  .decision-row:last-child { margin-bottom: 0; }
+  .dr-label { font-size: 10.5px; font-weight: 600; color: var(--ink-500); margin-bottom: 3px; }
+  .dr-text { font-size: 12.5px; color: var(--ink-700); line-height: 1.6; }
+  .dr-text.remediation {
+    font-style: italic;
+    border-left: 2px solid var(--brand-light);
+    padding-left: 12px;
+    color: var(--brand-dark);
+  }
+
+  /* Layer grid */
+  .layer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+  .layer-box {
+    background: var(--ink-50);
+    border: 1px solid var(--ink-100);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+  }
+  .layer-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-300);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .layer-verdict { font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 10px; }
+  .lv-compliant { background: var(--compliant-bg); color: var(--compliant); }
+  .lv-review    { background: var(--review-bg);    color: var(--review); }
+  .lv-critical  { background: var(--critical-bg);  color: var(--critical); }
+  .layer-desc   { font-size: 12px; color: var(--ink-700); line-height: 1.6; }
+
+  /* Flags row */
+  .flags-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .flag-box { border-radius: var(--radius-sm); padding: 11px 14px; }
+  .flag-box.conflict { background: #FFF8F0; border: 1px solid #FDE8C8; }
+  .flag-box.actions  { background: #F0F9FF; border: 1px solid #BAE6FD; }
+  .flag-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .flag-label.conflict { color: #B45309; }
+  .flag-label.actions  { color: #0369A1; }
+  .priority-tag { font-size: 9px; font-weight: 600; padding: 1px 7px; border-radius: 10px; background: #DBEAFE; color: #1D4ED8; }
+  .flag-text { font-size: 12px; line-height: 1.6; }
+  .flag-text.conflict { color: #92400E; }
+  .flag-text.actions  { color: #075985; }
+
+  .clause-footer {
+    padding: 10px 20px;
+    border-top: 1px solid var(--ink-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--ink-50);
+  }
+  .cf-timestamp { font-size: 10.5px; color: var(--ink-300); }
+  .cf-confidence { font-size: 10.5px; color: var(--ink-500); font-weight: 500; }
+
+  /* ── DATA TABLE ── */
+  .table-wrapper {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid rgba(23,131,223,.07);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table thead tr { background: var(--brand-xlight); border-bottom: 1.5px solid var(--brand-light); }
+  .data-table th {
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  .data-table th:first-child { padding-left: 24px; }
+  .data-table th:last-child  { padding-right: 24px; text-align: right; }
+  .data-table tbody tr { border-bottom: 1px solid var(--ink-100); transition: background .15s; }
+  .data-table tbody tr:last-child { border-bottom: none; }
+  .data-table tbody tr:hover { background: var(--ink-50); }
+  .data-table td { padding: 13px 18px; font-size: 12.5px; color: var(--ink-700); vertical-align: middle; }
+  .data-table td:first-child { padding-left: 24px; color: var(--ink-900); font-weight: 500; }
+  .data-table td:last-child  { padding-right: 24px; text-align: right; }
+  .td-mono { font-variant-numeric: tabular-nums; font-size: 12px; }
+
+  /* ── RECOMMENDATIONS ── */
+  .rec-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+  .rec-item {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid rgba(23,131,223,.07);
+    box-shadow: var(--shadow-sm);
+    padding: 18px 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .rec-number {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .rec-title { font-size: 13.5px; font-weight: 600; color: var(--ink-900); margin-bottom: 4px; }
+  .rec-desc  { font-size: 12.5px; color: var(--ink-500); line-height: 1.65; }
+  .rec-tag   { display: inline-block; margin-top: 8px; font-size: 10.5px; font-weight: 600; padding: 2px 10px; border-radius: 20px; letter-spacing: .04em; }
+  .rec-tag.high   { background: var(--critical-bg);  color: var(--critical); }
+  .rec-tag.medium { background: var(--review-bg);    color: var(--review); }
+  .rec-tag.low    { background: var(--brand-light);  color: var(--brand); }
+
+  /* ── SIGNATURES ── */
+  .sign-block {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid rgba(23,131,223,.07);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .sign-header {
+    background: var(--brand-xlight);
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--brand-light);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  .sign-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .sign-cell { padding: 22px 24px; border-right: 1px solid var(--ink-100); }
+  .sign-cell:last-child { border-right: none; }
+  .sign-role { font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-300); margin-bottom: 22px; }
+  .sign-line { border-bottom: 1.5px solid var(--ink-900); margin-bottom: 8px; width: 80%; }
+  .sign-name { font-size: 12.5px; font-weight: 500; color: var(--ink-700); }
+  .sign-date { font-size: 11px; color: var(--ink-300); margin-top: 2px; }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0 0;
+    border-top: 1px solid var(--ink-100);
+  }
+  .rf-brand { display: flex; align-items: center; gap: 8px; color: var(--ink-300); font-size: 11.5px; }
+  .rf-brand-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); opacity: .5; }
+  .rf-legal { font-size: 10.5px; color: var(--ink-300); text-align: right; max-width: 380px; line-height: 1.5; }
+
+  @media print {
+    body { background: #fff; }
+    .page { padding: 0; max-width: 100%; }
+    .cover, .clause-card, .table-wrapper, .sign-block, .rec-item { break-inside: avoid; box-shadow: none !important; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ COVER HEADER ══ -->
+  <div class="cover">
+    <div class="cover-accent"></div>
+    <div class="cover-top">
+      <div class="cover-logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
+            <path d="M2 12H22M12 2C9.33 5.33 8 8.5 8 12C8 15.5 9.33 18.67 12 22M12 2C14.67 5.33 16 8.5 16 12C16 15.5 14.67 18.67 12 22" stroke="rgba(255,255,255,0.9)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <div class="logo-name">Fortiv Solutions</div>
+          <div class="logo-sub">Islamic Finance Compliance Platform</div>
+        </div>
+      </div>
+      <div class="cover-pill">Confidential Report</div>
+    </div>
+
+    <div class="cover-body">
+      <div class="cover-title">Shariah Compliance Report</div>
+      <div class="cover-doc-name">
+        <span>SAMPLE MURABAHA AGREEMENT (1).pdf</span>
+        Analysed: 18 February 2026 &nbsp;·&nbsp; Contract Type: Murabaha
+      </div>
+      <div class="cover-meta-row">
+        <div class="cover-meta-item">
+          <div class="meta-label">Total Clauses</div>
+          <div class="meta-value">28</div>
+          <div class="meta-sub">Analysed in full</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="meta-label">Compliant</div>
+          <div class="meta-value compliant">3</div>
+          <div class="meta-sub">10.7% of total</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="meta-label">Needs Review</div>
+          <div class="meta-value review">23</div>
+          <div class="meta-sub">82.1% of total</div>
+        </div>
+        <div class="cover-meta-item">
+          <div class="meta-label">Non-Compliant</div>
+          <div class="meta-value critical">2</div>
+          <div class="meta-sub">7.1% of total</div>
+        </div>
+      </div>
+
+      <!-- AI Disclaimer -->
+      <div style="
+        margin-top: 20px;
+        background: rgba(255,255,255,0.09);
+        border: 1px solid rgba(255,220,100,0.35);
+        border-radius: 8px;
+        padding: 13px 18px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        position: relative; z-index: 1;
+      ">
+        <div style="flex-shrink:0;margin-top:2px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 9V13M12 17H12.01M10.29 3.86L1.82 18C1.45 18.64 1.91 19.45 2.65 19.45H21.35C22.09 19.45 22.55 18.64 22.18 18L13.71 3.86C13.32 3.22 12.68 2.86 12 2.86C11.32 2.86 10.68 3.22 10.29 3.86Z" stroke="rgba(255,220,80,1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <span style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,220,80,1);">AI-Generated Report &mdash; Disclaimer &nbsp;</span>
+          <span style="font-size:12px;line-height:1.65;opacity:.78;">This report was generated by Fortiv Solutions' AI compliance engine. AI analysis <strong style="opacity:.95;font-weight:600;">may contain errors or omissions</strong> and does not constitute legal or Shariah advice. All findings must be independently verified by a qualified Shariah scholar or certified compliance professional before any contractual or regulatory reliance is placed on this report.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ DOCUMENT INFORMATION ══ -->
+  <div class="section-header">
+    <div class="section-dot"></div>
+    <h2>Document Information</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-block">
+    <div class="info-block-grid">
+      <div class="info-cell">
+        <div class="info-cell-label">Document Name</div>
+        <div class="info-cell-value">Sample Murabaha Agreement (1).pdf</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-label">Contract Type</div>
+        <div class="info-cell-value">Murabaha</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-label">Date Analysed</div>
+        <div class="info-cell-value">18 February 2026</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-label">Analysed By</div>
+        <div class="info-cell-value">Naitik Patel — Compliance Analyst</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-label">Regulatory Frameworks</div>
+        <div class="info-cell-value">AAOIFI SS-8 &amp; SAMA Regulations</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-label">Report ID</div>
+        <div class="info-cell-value td-mono">#FSR-2026-0218-001</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CLAUSE ANALYSIS ══ -->
+  <div class="section-header">
+    <div class="section-dot"></div>
+    <h2>Clause-by-Clause Analysis</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="clause-tabs">
+    <button class="clause-tab active">All Clauses <span class="tab-count">28</span></button>
+    <button class="clause-tab inactive">Compliant <span class="tab-count">3</span></button>
+    <button class="clause-tab inactive">Needs Review <span class="tab-count">23</span></button>
+    <button class="clause-tab inactive">Non-Compliant <span class="tab-count">2</span></button>
+  </div>
+
+  <div class="clause-list">
+
+    <!-- Clause 1: Needs Review / Critical -->
+    <div class="clause-card status-review">
+      <div class="clause-top">
+        <div class="clause-top-left">
+          <span class="clause-id">[1]</span>
+          <span class="status-badge badge-review">⚠ Needs Review</span>
+          <span class="severity-tag critical">Critical</span>
+        </div>
+        <div class="clause-top-right">
+          <span class="conf-pill">65% Conf.</span>
+        </div>
+      </div>
+      <div class="clause-body">
+        <div class="clause-text-label">Clause Text</div>
+        <div class="clause-text">
+          "IT IS HEREBY AGREED as follows: The Purchaser wishes to avail itself of a single Murabaha contract arrangement to be made available to it by the Seller subject to and upon the terms herein contained, whereby the Seller will, at the request of the Purchaser, purchase commodities from suppliers on immediate delivery and immediate payment terms and will sell such commodities to the Purchaser on immediate delivery and deferred payment terms for specific period in compliance with the principles and rules of Murabaha as defined by the Sharia' Fatwa and Supervisory Board of the Seller."
+        </div>
+        <div class="decision-block">
+          <div class="decision-header">
+            <div class="decision-header-dot"></div>
+            <div class="decision-header-label">Final Decision</div>
+          </div>
+          <div class="decision-body">
+            <div class="decision-row">
+              <div class="dr-label">Rationale</div>
+              <div class="dr-text">SAMA layer returned a classification of needs_review due to insufficient regulation retrieval, which triggers an escalation to a needs_review status under decision hierarchy Rule 4, despite the AAOIFI layer being compliant.</div>
+            </div>
+            <div class="decision-row">
+              <div class="dr-label">Remediation / Conditions</div>
+              <div class="dr-text remediation">"Ensure that the specific Murabaha terms comply with SAMA regulations and provide clarity on profit rates and consumer obligations. Review the contract with a focus on SAMA compliance before final approval."</div>
+            </div>
+          </div>
+        </div>
+        <div class="layer-grid">
+          <div class="layer-box">
+            <div class="layer-title">AAOIFI Layer <span class="layer-verdict lv-compliant">Compliant</span></div>
+            <div class="layer-desc">The clause adheres to the principles of Murabahah as outlined in AAOIFI Standard SS-8, permitting immediate delivery and deferred payment.</div>
+          </div>
+          <div class="layer-box">
+            <div class="layer-title">SAMA Layer <span class="layer-verdict lv-review">Needs Review</span></div>
+            <div class="layer-desc">Insufficient SAMA regulations retrieved. Manual expert review required.</div>
+          </div>
+        </div>
+        <div class="flags-row">
+          <div class="flag-box conflict">
+            <div class="flag-label conflict">⇄ Conflicts Resolved</div>
+            <div class="flag-text conflict">AAOIFI is compliant while SAMA is needs_review. Resolution: SAMA's needs_review classification prevails per Rule 4, indicating the need for further examination.</div>
+          </div>
+          <div class="flag-box actions">
+            <div class="flag-label actions">✦ Required Actions <span class="priority-tag">Medium Priority</span></div>
+            <div class="flag-text actions">Escalate to senior Shariah officer and SAMA compliance specialist for joint review.</div>
+          </div>
+        </div>
+      </div>
+      <div class="clause-footer">
+        <span class="cf-timestamp">Analysed: 18/02/2026, 5:46:49 PM</span>
+        <span class="cf-confidence">Confidence: 65%</span>
+      </div>
+    </div>
+
+    <!-- Clause 2.1: Needs Review / Critical -->
+    <div class="clause-card status-review">
+      <div class="clause-top">
+        <div class="clause-top-left">
+          <span class="clause-id">[2.1]</span>
+          <span class="status-badge badge-review">⚠ Needs Review</span>
+          <span class="severity-tag critical">Critical</span>
+        </div>
+        <div class="clause-top-right">
+          <span class="conf-pill">65% Conf.</span>
+        </div>
+      </div>
+      <div class="clause-body">
+        <div class="clause-text-label">Clause Text</div>
+        <div class="clause-text">In this Agreement and in the Schedules the following terms and expression shall have the meanings assigned to them herein…</div>
+        <div class="decision-block">
+          <div class="decision-header">
+            <div class="decision-header-dot"></div>
+            <div class="decision-header-label">Final Decision</div>
+          </div>
+          <div class="decision-body">
+            <div class="decision-row">
+              <div class="dr-label">Rationale</div>
+              <div class="dr-text">Definitions clause contains terms that may be ambiguous under SAMA's consumer protection guidelines. Key profit-rate terminology requires precise disclosure language.</div>
+            </div>
+            <div class="decision-row">
+              <div class="dr-label">Remediation / Conditions</div>
+              <div class="dr-text remediation">"Revise definitions to include explicit profit rate disclosure language and align all defined terms with SAMA's standardised Islamic finance glossary."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clause-footer">
+        <span class="cf-timestamp">Analysed: 18/02/2026, 5:46:49 PM</span>
+        <span class="cf-confidence">Confidence: 65%</span>
+      </div>
+    </div>
+
+    <!-- Clause 3.1: Compliant -->
+    <div class="clause-card status-compliant">
+      <div class="clause-top">
+        <div class="clause-top-left">
+          <span class="clause-id">[3.1]</span>
+          <span class="status-badge badge-compliant">✓ Compliant</span>
+          <span class="severity-tag low">Low</span>
+        </div>
+        <div class="clause-top-right">
+          <span class="conf-pill">88% Conf.</span>
+        </div>
+      </div>
+      <div class="clause-body">
+        <div class="clause-text-label">Clause Text</div>
+        <div class="clause-text">The profit rate applicable to this Murabaha arrangement shall be fixed at the time of execution and shall not vary during the deferred payment period, in accordance with the prohibition of Riba…</div>
+        <div class="decision-block" style="border-color:var(--compliant-border)">
+          <div class="decision-header" style="background:var(--compliant-bg);border-color:var(--compliant-border)">
+            <div class="decision-header-dot" style="background:var(--compliant)"></div>
+            <div class="decision-header-label" style="color:var(--compliant)">Final Decision</div>
+          </div>
+          <div class="decision-body">
+            <div class="decision-row">
+              <div class="dr-label">Rationale</div>
+              <div class="dr-text">Fixed profit rate clause is fully compliant with AAOIFI SS-8 and aligns with SAMA's prohibition on variable rates in Murabaha contracts. Both layers returned compliant verdicts with high confidence.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clause-footer">
+        <span class="cf-timestamp">Analysed: 18/02/2026, 5:46:49 PM</span>
+        <span class="cf-confidence">Confidence: 88%</span>
+      </div>
+    </div>
+
+    <!-- Clause 4.2: Non-Compliant -->
+    <div class="clause-card status-critical">
+      <div class="clause-top">
+        <div class="clause-top-left">
+          <span class="clause-id">[4.2]</span>
+          <span class="status-badge badge-critical">✕ Non-Compliant</span>
+          <span class="severity-tag critical">Critical</span>
+        </div>
+        <div class="clause-top-right">
+          <span class="conf-pill">79% Conf.</span>
+        </div>
+      </div>
+      <div class="clause-body">
+        <div class="clause-text-label">Clause Text</div>
+        <div class="clause-text">In the event of late payment, the Purchaser shall pay an additional penalty charge calculated at [X]% per annum on the outstanding balance for each day of delay beyond the agreed settlement date…</div>
+        <div class="decision-block" style="border-color:var(--critical-border)">
+          <div class="decision-header" style="background:var(--critical-bg);border-color:var(--critical-border)">
+            <div class="decision-header-dot" style="background:var(--critical)"></div>
+            <div class="decision-header-label" style="color:var(--critical)">Final Decision</div>
+          </div>
+          <div class="decision-body">
+            <div class="decision-row">
+              <div class="dr-label">Rationale</div>
+              <div class="dr-text">Penalty clause constitutes Riba (interest) on late payments, which is explicitly prohibited under both AAOIFI standards and SAMA Islamic banking regulations. Compound penalty structures are not permissible in any form.</div>
+            </div>
+            <div class="decision-row">
+              <div class="dr-label">Remediation / Conditions</div>
+              <div class="dr-text remediation">"Replace penalty clause with a charitable donation mechanism or remove entirely. Permissible alternatives include a capped administrative fee donated to charity, never retained by the Seller."</div>
+            </div>
+          </div>
+        </div>
+        <div class="layer-grid">
+          <div class="layer-box">
+            <div class="layer-title">AAOIFI Layer <span class="layer-verdict lv-critical">Non-Compliant</span></div>
+            <div class="layer-desc">Clause violates AAOIFI SS-8 prohibition on Riba-based penalty structures. Interest-based late fees are categorically prohibited.</div>
+          </div>
+          <div class="layer-box">
+            <div class="layer-title">SAMA Layer <span class="layer-verdict lv-critical">Non-Compliant</span></div>
+            <div class="layer-desc">SAMA Islamic banking guidelines explicitly prohibit any form of compounding interest or penalty-based late payment charges.</div>
+          </div>
+        </div>
+        <div class="flags-row">
+          <div class="flag-box actions" style="background:#FFF5F5;border-color:#FECACA;">
+            <div class="flag-label" style="color:#991B1B;">⚠ Required Actions <span class="priority-tag" style="background:#FEE2E2;color:#DC2626;">High Priority</span></div>
+            <div class="flag-text" style="color:#7F1D1D;">Clause must be redrafted or removed before contract execution. Escalate to Chief Shariah Officer immediately for mandatory review.</div>
+          </div>
+          <div class="flag-box conflict">
+            <div class="flag-label conflict">⇄ Regulatory Conflict</div>
+            <div class="flag-text conflict">Both AAOIFI and SAMA layers returned Non-Compliant. Unanimous finding — Riba structure present with no ambiguity.</div>
+          </div>
+        </div>
+      </div>
+      <div class="clause-footer">
+        <span class="cf-timestamp">Analysed: 18/02/2026, 5:46:49 PM</span>
+        <span class="cf-confidence">Confidence: 79%</span>
+      </div>
+    </div>
+
+    <!-- More clauses placeholder -->
+    <div style="text-align:center;padding:16px;background:var(--white);border-radius:var(--radius);border:1px dashed var(--ink-100);color:var(--ink-300);font-size:12px;font-style:italic;">
+      Clauses [2.2] through [5.5] continue on following pages — 24 additional clauses included in full report export
+    </div>
+  </div>
+
+  <!-- ══ REPORT FOOTER ══ -->
+  <div class="report-footer">
+    <div class="rf-brand">
+      <div class="rf-brand-dot"></div>
+      Generated by <strong style="color:var(--brand);margin-left:4px;">Fortiv Solutions</strong>
+      &nbsp;·&nbsp; Report ID: <span style="font-family:monospace;font-size:11px;">#FSR-2026-0218-001</span>
+    </div>
+    <div class="rf-legal">
+      This report is confidential and intended solely for the named recipient. The analysis is AI-assisted and should be reviewed by a qualified Shariah scholar before contractual reliance.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
